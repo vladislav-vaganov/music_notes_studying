@@ -5,67 +5,16 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1" />
     <title>Music notes studying</title>
+
+    <link rel="stylesheet" href="styles.css">
+    <script type="text/javascript" src="index.js" defer></script>
 </head>
 
 <body>
     <div>Count: <b id="counter-value">0</b></div>
-    <div><button type="button" id="speak-btn" >Next</button></div>
+    <button type="button" id="speak-btn">Next</button>
+    <button type="button" id="play-btn">Play</button>
+    <button type="button" id="pause-btn">Pause</button>
     <div id="text"></div>
-
-    <style type="text/css">
-        div {
-            margin-top: 2em;
-            margin-left: 10%;
-            font-size: 50pt;
-        }
-
-        #speak-btn {
-            font-size: 50pt;
-            width: 7em;
-        }
-    </style>
-
-    <script type="text/javascript">
-        const octaveNames = ['субконтроктава', 'контроктава', 'большая октава', 'малая октава',
-        'первая октава', 'вторая октава', 'третья октава', 'четвертая октава', 'пятая октава'];
-
-        const noteNames = ['до', 'ре', 'ми', 'фа', 'соль', 'ля', 'си'];
-
-        const alterNames = [' бемоль', '', ' диез'];
-
-        const utterance = new SpeechSynthesisUtterance();
-        utterance.lang = 'ru-RU';
-
-        const randomInteger = (min, max) =>  Math.floor(Math.random() * (max + 1 - min) + min);
-
-        function getText() {
-            const rnd = randomInteger(5, 56);
-        const octave = Math.floor(rnd / 7);
-        const note = rnd % 7;
-        
-        const alter = randomInteger(0, 2);
-        
-        if (rnd === 5 && alter == 0 || 
-            rnd === 56 && alter == 2) {
-            return getText();
-        }
-            
-            return `${octaveNames[octave]} ${noteNames[note]}${alterNames[alter]}`;
-        }
-
-        let count = 0;
-        const cunterView = document.getElementById("counter-value");
-        const textView = document.getElementById("text");
-
-        function speak() {
-            const text = getText()
-            utterance.text = text;
-            speechSynthesis.speak(utterance);
-            cunterView.innerText = ++count;
-            textView.innerText = text;
-        }
-
-        document.getElementById("speak-btn").onclick = speak;
-    </script>
 </body>
 </html>
