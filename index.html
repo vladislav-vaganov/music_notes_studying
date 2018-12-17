@@ -12,9 +12,14 @@
 
 <body>
     <div>Count: <b id="counter-value">0</b></div>
-    <button type="button" id="speak-btn">Next</button>
-    <button type="button" id="play-btn">Play</button>
-    <button type="button" id="pause-btn">Pause</button>
+    <button type="button" id="speak-btn" class="big-btn">Next</button>
+    <button type="button" id="play-btn" class="big-btn">Play</button>
+    <button type="button" id="pause-btn" class="big-btn">Pause</button>
+    <div class="settings">
+        <button type="button" id="decrease-delay-btn">&lt;</button>
+        <span><b id="delay-value">7</b> sec</span>
+        <button type="button" id="increase-delay-btn">&gt;</button>
+    </div>
     <div id="text"></div>
 </body>
 </html>

@@ -40,8 +40,8 @@ function speak() {
     const text = getText();
     utterance.text = text;
     speechSynthesis.speak(utterance);
-    cunterView.innerText = ++count;
-    textView.innerText = text;
+    cunterView.textContent = ++count;
+    textView.textContent = text;
 }
 
 function onEndHandler() {
@@ -51,7 +51,7 @@ function onEndHandler() {
 utterance.onend = onEndHandler;
 
 let timeoutId;
-const delay = 7000;
+let delay = 7000;
 
 function play() {
     speak();
@@ -72,6 +72,25 @@ function pause() {
     timeoutId = null;
 }
 
-document.getElementById("speak-btn").onclick = speak;
+document.getElementById("speak-btn").onclick = () => {
+    pause();
+    speak();
+};
 document.getElementById("play-btn").onclick = play;
 document.getElementById("pause-btn").onclick = pause;
+
+const delayValue = document.getElementById("delay-value");
+
+function changeDelay(diff) {
+    const newValue = delay + diff;
+    
+    if (newValue < 1000) {
+        return;
+    }
+
+    delay = newValue;
+    delayValue.textContent = newValue / 1000;
+}
+
+document.getElementById("decrease-delay-btn").onclick = () => changeDelay(-1000);
+document.getElementById("increase-delay-btn").onclick = () => changeDelay(1000);

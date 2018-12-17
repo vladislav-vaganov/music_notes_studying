@@ -1,14 +1,22 @@
 body {
     font-size: 50pt;
+    padding-left: 10%;
 }
 
-div, button {
+div {
     margin-top: 1em;
-    margin-left: 10%;
 }
 
 button {
-    min-width: 7em;
     font-size: 50pt;
+}
+
+.big-btn {
+    min-width: 7em;
     display: block;
+    margin-top: 1em;
+}
+
+.settings button {
+    width: 2em;
 }
