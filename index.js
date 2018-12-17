@@ -30,23 +30,40 @@ const textView = document.getElementById("text");
 const utterance = new SpeechSynthesisUtterance();
 utterance.lang = 'ru-RU';
 
+let isProcessing = false;
 function speak() {
-    const text = getText()
+    if (isProcessing) {
+        return;
+    }
+
+    isProcessing = true;
+    const text = getText();
     utterance.text = text;
     speechSynthesis.speak(utterance);
     cunterView.innerText = ++count;
     textView.innerText = text;
 }
 
+function onEndHandler() {
+    isProcessing = false;
+}
+
+utterance.onend = onEndHandler;
+
 let timeoutId;
-const delay = 5000;
+const delay = 7000;
 
 function play() {
     speak();
-    timeoutId = setTimeout(play, delay);
+    utterance.onend = () => {
+        timeoutId = setTimeout(play, delay);
+        onEndHandler();
+    }
 }
 
 function pause() {
+    utterance.onend = onEndHandler;
+
     if (!timeoutId) {
         return;
     }
