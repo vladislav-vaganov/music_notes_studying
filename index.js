@@ -1,14 +1,16 @@
 const octaveNames = ['субконтроктава', 'контроктава', 'большая октава', 'малая октава',
     'первая октава', 'вторая октава', 'третья октава', 'четвертая октава', 'пятая октава'];
+const octaveNamesForSpeech = ['суб контр октава', 'контр октава', ...octaveNames.slice(2)];
 
 const noteNames = ['до', 'ре', 'ми', 'фа', 'соль', 'ля', 'си'];
+const noteNamesForSpeech = ['доъ', ...noteNames.slice(1)];
 
-const alterNames = [' бемоль', '', ' диез'];
+const alterNames = ['бемоль', '', 'диез'];
 
 const randomInteger = (min, max) =>
     Math.floor(Math.random() * (max + 1 - min) + min);
 
-function getText() {
+function getRandomNote() {
     const rnd = randomInteger(5, 56);
     const octave = Math.floor(rnd / 7);
     const note = rnd % 7;
@@ -20,8 +22,15 @@ function getText() {
         return getText();
     }
 
-    return `${octaveNames[octave]} ${noteNames[note]}${alterNames[alter]}`;
+    return  {
+        octave,
+        note,
+        alter
+    };
 }
+
+const getTextForSpeech = ({octave, note, alter}) => `${octaveNamesForSpeech[octave]} ${noteNamesForSpeech[note]} ${alterNames[alter]}`;
+const getTextForShow = ({octave, note, alter}) => `${octaveNames[octave]} ${noteNames[note]} ${alterNames[alter]}`;
 
 let count = 0;
 const cunterView = document.getElementById("counter-value");
@@ -37,11 +46,11 @@ function speak() {
     }
 
     isProcessing = true;
-    const text = getText();
-    utterance.text = text;
+    const note = getRandomNote();
+    utterance.text = getTextForSpeech(note);
     speechSynthesis.speak(utterance);
     cunterView.textContent = ++count;
-    textView.textContent = text;
+    textView.textContent = getTextForShow(note);
 }
 
 function onEndHandler() {
@@ -51,7 +60,7 @@ function onEndHandler() {
 utterance.onend = onEndHandler;
 
 let timeoutId;
-let delay = 7000;
+let delay = 6000;
 
 function play() {
     speak();
